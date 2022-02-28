@@ -1,0 +1,8 @@
+[package]
+name = "avis"
+version = "0.0.0"
+edition = "2021"
+description = "avis stands for Audio VISualiser, It takes system audio and produces realtime visuals"
+license = "GPL-3.0-or-later"
+
+[dependencies]
