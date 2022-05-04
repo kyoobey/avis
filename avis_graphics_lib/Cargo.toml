@@ -1,0 +1,8 @@
+[package]
+name = "avis_graphics_lib"
+version = "0.0.0"
+edition = "2021"
+description = "audio library for avis (stands for Audio VISualiser)"
+license = "GPL-3.0-or-later"
+
+[dependencies]
