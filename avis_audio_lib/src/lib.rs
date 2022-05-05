@@ -58,36 +58,21 @@ pub fn capture_output_stream(
 
 	let mut f32_samples: Vec<f32> = Vec::with_capacity(f32_samples_capacity.into());
 	match audio_config.sample_format() {
-		cpal::SampleFormat::F32 => {
-			match device.build_input_stream(
-				&audio_config.into(),
-				move |data, _: &_| wave_reader::<f32>(data, &mut f32_samples, audio_data_channel.clone()),
-				audio_capture_error_function
-			) {
-				Ok(stream) => Some(stream),
-				Err(e) => None
-			}
-		},
-		cpal::SampleFormat::I16 => {
-			match device.build_input_stream(
-				&audio_config.into(),
-				move |data, _: &_| wave_reader::<i16>(data, &mut f32_samples, audio_data_channel.clone()),
-				audio_capture_error_function
-			) {
-				Ok(stream) => Some(stream),
-				Err(e) => None
-			}
-		},
-		cpal::SampleFormat::U16 => {
-			match device.build_input_stream(
-				&audio_config.into(),
-				move |data, _: &_| wave_reader::<u16>(data, &mut f32_samples, audio_data_channel.clone()),
-				audio_capture_error_function
-			) {
-				Ok(stream) => Some(stream),
-				Err(e) => None
-			}
-		}
+		cpal::SampleFormat::F32 => device.build_input_stream(
+			&audio_config.into(),
+			move |data, _: &_| wave_reader::<f32>(data, &mut f32_samples, audio_data_channel.clone()),
+			audio_capture_error_function
+		).ok(),
+		cpal::SampleFormat::I16 => device.build_input_stream(
+			&audio_config.into(),
+			move |data, _: &_| wave_reader::<i16>(data, &mut f32_samples, audio_data_channel.clone()),
+			audio_capture_error_function
+		).ok(),
+		cpal::SampleFormat::U16 => device.build_input_stream(
+			&audio_config.into(),
+			move |data, _: &_| wave_reader::<u16>(data, &mut f32_samples, audio_data_channel.clone()),
+			audio_capture_error_function
+		).ok()
 	}
 
 }
@@ -109,6 +94,11 @@ where
 	INITIALIZER.call_once(|| {
 		trace!("The wave_reader is now recieving samples ...");
 	});
+	f32_samples.clear();
+	f32_samples.extend(samples.iter().map(|x| x.to_f32()));
+	audio_data_channel.send(f32_samples.to_vec()).unwrap_or_else(|_| {
+		error!("couldn't get valid audio data");
+	})
 }
 
 
