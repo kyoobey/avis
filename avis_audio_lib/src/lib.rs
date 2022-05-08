@@ -92,7 +92,7 @@ where
 {
 	static INITIALIZER: Once = Once::new();
 	INITIALIZER.call_once(|| {
-		trace!("The wave_reader is now recieving samples ...");
+		warn!("The wave_reader is now recieving samples ...");
 	});
 	f32_samples.clear();
 	f32_samples.extend(samples.iter().map(|x| x.to_f32()));

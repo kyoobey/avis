@@ -8,3 +8,18 @@ license = "GPL-3.0-or-later"
 [dependencies]
 avis_audio_lib = { path = "../avis_audio_lib" }
 avis_graphics_lib = { path = "../avis_graphics_lib" }
+
+cpal = "~0.13.5"
+crossbeam-channel = "~0.5.4"
+log = "~0.4.16"
+pollster = "~0.2.5"
+winit = "~0.26.1"
+wgpu = "~0.12.0"
+rustfft = "~6.0.1"
+spectrum-analyzer = "~1.2.4"
+
+
+[dependencies.simple_logger]
+version = "2.1.0"
+default-features = false
+features = ["colors"]
