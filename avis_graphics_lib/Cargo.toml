@@ -6,6 +6,8 @@ description = "audio library for avis (stands for Audio VISualiser)"
 license = "GPL-3.0-or-later"
 
 [dependencies]
+bytemuck = { version = "~1.9.1", features = [ "derive", "min_const_generics"] }
+cgmath = "~0.18.0"
 log = "~0.4.16"
 winit = "~0.26.1"
 wgpu = "~0.12.0"
